@@ -1,0 +1,763 @@
+<title>Registro de Comidas</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#F7F7FA;
+    --surface:#FFFFFF;
+    --surface-2:#EFEFF3;
+    --border:#E5E5EA;
+    --text:#14181D;
+    --text-muted:#6E7278;
+    --text-faint:#9C9FA5;
+    --orange:#FC4C02;
+    --orange-soft:#FFE3D6;
+    --c-kcal:#FC4C02;
+    --c-kcal-soft:#FFE3D6;
+    --c-protein:#0C6FD1;
+    --c-protein-soft:#DBEAFB;
+    --c-carb:#E0A100;
+    --c-carb-soft:#FBEDCC;
+    --c-fat:#00A18C;
+    --c-fat-soft:#D6F1EC;
+    --shadow: 0 1px 2px rgba(20,24,29,.05), 0 8px 20px -12px rgba(20,24,29,.14);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121212;
+      --surface:#1C1C1E;
+      --surface-2:#242426;
+      --border:#333335;
+      --text:#F4F4F5;
+      --text-muted:#A3A3A7;
+      --text-faint:#707074;
+      --orange:#FF6A2B;
+      --orange-soft:#3A2015;
+      --c-kcal:#FF6A2B;
+      --c-kcal-soft:#3A2015;
+      --c-protein:#4C9BEF;
+      --c-protein-soft:#132436;
+      --c-carb:#F0BB33;
+      --c-carb-soft:#332A11;
+      --c-fat:#2FCBB3;
+      --c-fat-soft:#0F2E29;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -12px rgba(0,0,0,.55);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121212;
+    --surface:#1C1C1E;
+    --surface-2:#242426;
+    --border:#333335;
+    --text:#F4F4F5;
+    --text-muted:#A3A3A7;
+    --text-faint:#707074;
+    --orange:#FF6A2B;
+    --orange-soft:#3A2015;
+    --c-kcal:#FF6A2B;
+    --c-kcal-soft:#3A2015;
+    --c-protein:#4C9BEF;
+    --c-protein-soft:#132436;
+    --c-carb:#F0BB33;
+    --c-carb-soft:#332A11;
+    --c-fat:#2FCBB3;
+    --c-fat-soft:#0F2E29;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -12px rgba(0,0,0,.55);
+    color-scheme: dark;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter", system-ui, sans-serif;
+    line-height:1.45;
+  }
+  ::selection{ background:var(--orange-soft); }
+
+  .wrap{
+    max-width:900px;
+    margin:0 auto;
+    padding:26px 18px 64px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  /* ---------- Header (wordmark) ---------- */
+  header{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding-bottom:4px;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:2px;
+  }
+  h1{
+    font-family:"Barlow Condensed", sans-serif;
+    font-weight:800;
+    font-size:clamp(24px,4.4vw,30px);
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    margin:0;
+  }
+  .brand-dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--orange);
+    margin-left:4px;
+    align-self:flex-start;
+    margin-top:6px;
+  }
+  .brand-eyebrow{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 2px;
+  }
+  .date-nav{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .date-nav button{
+    width:32px;height:32px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    font-size:16px;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .date-nav button:hover{ border-color:var(--orange); color:var(--orange); }
+  .date-nav button:focus-visible, input:focus-visible, select:focus-visible{
+    outline:2px solid var(--orange); outline-offset:2px;
+  }
+  .date-field{
+    display:flex; flex-direction:column; align-items:center; gap:1px;
+    min-width:140px;
+  }
+  .date-field input[type="date"]{
+    font-family:"Inter", sans-serif;
+    font-weight:700;
+    font-size:13px;
+    border:none;
+    background:transparent;
+    color:var(--text);
+    padding:4px 6px;
+    text-align:center;
+  }
+  .day-label{
+    font-size:11px;
+    font-weight:600;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+  }
+  .today-btn{
+    font-family:"Inter", sans-serif;
+    font-size:12.5px;
+    font-weight:700;
+    color:#fff;
+    background:var(--orange);
+    border:none;
+    border-radius:20px;
+    padding:8px 16px;
+    cursor:pointer;
+  }
+
+  /* ---------- Weekly-style stat bar ---------- */
+  .summary{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    padding:16px 6px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .tile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+    padding:0 10px;
+    border-right:1px solid var(--border);
+  }
+  .tile:last-child{ border-right:none; }
+  .tile-head{ display:none; }
+  .tile-name{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    order:3;
+  }
+  .tile-values{
+    display:flex; flex-direction:column; align-items:center; gap:3px;
+    order:1;
+  }
+  .tile-now{
+    font-family:"Barlow Condensed", sans-serif;
+    font-weight:800;
+    font-size:32px;
+    line-height:1.2;
+    font-variant-numeric: tabular-nums;
+  }
+  .tile-target{ font-size:10.5px; color:var(--text-faint); order:2; line-height:1.3; }
+  .bar-track{
+    width:70%;
+    height:4px; border-radius:99px; background:var(--surface-2); overflow:hidden;
+    order:4;
+    margin-top:2px;
+  }
+  .bar-fill{ height:100%; border-radius:99px; transition:width .35s ease; }
+  .tile.kcal .bar-fill,.tile.kcal .tile-now{ background:var(--c-kcal); }
+  .tile.kcal .tile-now{ background:none; color:var(--c-kcal); }
+  .tile.protein .bar-fill{ background:var(--c-protein); }
+  .tile.protein .tile-now{ color:var(--c-protein); }
+  .tile.carb .bar-fill{ background:var(--c-carb); }
+  .tile.carb .tile-now{ color:var(--c-carb); }
+  .tile.fat .bar-fill{ background:var(--c-fat); }
+  .tile.fat .tile-now{ color:var(--c-fat); }
+
+  /* ---------- Meal "activity" cards ---------- */
+  .meals{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .meal-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px 14px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    transition:opacity .2s ease;
+  }
+  .meal-card.eaten{ opacity:.6; }
+  .meal-top{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .meal-name-row{ display:flex; align-items:center; gap:10px; }
+  .meal-slot{
+    width:34px; height:34px; border-radius:50%;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    font-size:10px; font-weight:800; text-transform:uppercase;
+    color:var(--text-muted);
+    flex-shrink:0;
+  }
+  .meal-card:nth-of-type(1) .meal-slot{ background:var(--c-kcal-soft); color:var(--c-kcal); }
+  .meal-card:nth-of-type(2) .meal-slot{ background:var(--c-protein-soft); color:var(--c-protein); }
+  .meal-card:nth-of-type(3) .meal-slot{ background:var(--c-carb-soft); color:var(--c-carb); }
+  .meal-card:nth-of-type(4) .meal-slot{ background:var(--c-fat-soft); color:var(--c-fat); }
+  .meal-name-col{ display:flex; flex-direction:column; gap:1px; }
+  .meal-title{
+    font-family:"Barlow Condensed", sans-serif;
+    font-weight:700;
+    font-size:20px;
+    text-transform:uppercase;
+  }
+  .meal-sub{
+    font-size:11.5px;
+    color:var(--text-faint);
+    font-weight:500;
+  }
+  select.block-select{
+    font-family:"Inter", sans-serif;
+    font-weight:600;
+    font-size:12px;
+    border:1px solid var(--border);
+    background:var(--surface-2);
+    color:var(--text);
+    border-radius:20px;
+    padding:5px 12px;
+    max-width:160px;
+  }
+  .eat-toggle{
+    flex-shrink:0;
+    width:36px; height:36px;
+    border-radius:50%;
+    border:1.5px solid var(--border);
+    background:var(--surface);
+    color:var(--text-faint);
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+    font-weight:800;
+  }
+  .eat-toggle.on{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#fff;
+  }
+  .item-list{
+    list-style:none; margin:0; padding:0;
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .item-list li{
+    font-size:13.5px;
+    color:var(--text-muted);
+    display:flex; justify-content:space-between; gap:8px;
+  }
+  .item-list li .qty{
+    font-weight:600;
+    font-size:12.5px;
+    color:var(--text);
+    white-space:nowrap;
+  }
+  .meal-macros{
+    display:flex;
+    font-size:12px;
+    color:var(--text-muted);
+    border-top:1px solid var(--border);
+    padding-top:10px;
+    margin-top:2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .meal-macros span{
+    flex:1;
+    text-align:center;
+    padding:0 4px;
+    border-left:1px solid var(--border);
+  }
+  .meal-macros span:first-child{ border-left:none; text-align:left; padding-left:0; }
+  .meal-macros b{
+    display:block;
+    font-family:"Barlow Condensed", sans-serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--text);
+    line-height:1.1;
+  }
+  .extra-note{
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--c-carb);
+  }
+
+  /* ---------- History strip ---------- */
+  .history{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px 18px;
+    box-shadow:var(--shadow);
+  }
+  .history-head{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:12px;
+  }
+  .history-title{
+    font-family:"Barlow Condensed", sans-serif; font-weight:700; font-size:18px; text-transform:uppercase;
+  }
+  .history-hint{ font-size:11px; color:var(--text-faint); }
+  .history-row{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:10px;
+    align-items:end;
+  }
+  .hbar-wrap{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .hbar-track{
+    width:100%;
+    height:64px;
+    background:var(--surface-2);
+    border-radius:6px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+    position:relative;
+  }
+  .hbar-band{
+    position:absolute; left:0; right:0;
+    background:var(--orange-soft);
+  }
+  .hbar-fill{
+    width:100%;
+    background:var(--text-faint);
+    border-radius:6px 6px 0 0;
+    position:relative;
+    min-height:2px;
+  }
+  .hbar-fill.today{ background:var(--orange); }
+  .hbar-day{ font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase; }
+  .hbar-day.today{ color:var(--orange); font-weight:800; }
+  .hbar-kcal{ font-size:10px; color:var(--text-faint); font-weight:600; }
+
+  footer.note{
+    font-size:11.5px;
+    color:var(--text-faint);
+    text-align:center;
+    padding-top:4px;
+  }
+
+  @media (max-width:640px){
+    .summary{ grid-template-columns:repeat(2,1fr); row-gap:14px; }
+    .tile:nth-child(2n){ border-right:none; }
+    .tile:nth-child(-n+2){ border-bottom:1px solid var(--border); padding-bottom:12px; }
+    .history-row{ grid-template-columns:repeat(7,minmax(0,1fr)); gap:5px; }
+    .hbar-track{ height:48px; }
+    .meal-macros{ font-size:11px; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <p class="brand-eyebrow">Recomposición · 4 comidas/día</p>
+      <div class="brand"><h1>Comidas</h1><span class="brand-dot"></span></div>
+    </div>
+    <div class="date-nav">
+      <button id="prevDay" aria-label="Día anterior">‹</button>
+      <div class="date-field">
+        <input type="date" id="dateInput">
+        <span class="day-label" id="dayLabel">lunes</span>
+      </div>
+      <button id="nextDay" aria-label="Día siguiente">›</button>
+      <button class="today-btn" id="todayBtn">Hoy</button>
+    </div>
+  </header>
+
+  <section class="summary" id="summary">
+    <div class="tile kcal">
+      <div class="tile-head"><span class="tile-name">Kcal</span></div>
+      <div class="tile-values"><span class="tile-now" id="v-kcal">0</span><span class="tile-target" id="t-kcal">/ 1700–1830</span></div>
+      <span class="tile-name">Kcal</span>
+      <div class="bar-track"><div class="bar-fill" id="b-kcal" style="width:0%"></div></div>
+    </div>
+    <div class="tile protein">
+      <div class="tile-values"><span class="tile-now" id="v-protein">0</span><span class="tile-target" id="t-protein">/ 150–165 g</span></div>
+      <span class="tile-name">Proteína</span>
+      <div class="bar-track"><div class="bar-fill" id="b-protein" style="width:0%"></div></div>
+    </div>
+    <div class="tile carb">
+      <div class="tile-values"><span class="tile-now" id="v-carb">0</span><span class="tile-target" id="t-carb">/ 145–190 g</span></div>
+      <span class="tile-name">Carbos</span>
+      <div class="bar-track"><div class="bar-fill" id="b-carb" style="width:0%"></div></div>
+    </div>
+    <div class="tile fat">
+      <div class="tile-values"><span class="tile-now" id="v-fat">0</span><span class="tile-target" id="t-fat">/ 36–55 g</span></div>
+      <span class="tile-name">Grasas</span>
+      <div class="bar-track"><div class="bar-fill" id="b-fat" style="width:0%"></div></div>
+    </div>
+  </section>
+
+  <section class="meals" id="meals"></section>
+
+  <section class="history">
+    <div class="history-head">
+      <span class="history-title">Últimos 7 días</span>
+      <span class="history-hint">kcal registradas · franja = objetivo 1700–1830</span>
+    </div>
+    <div class="history-row" id="historyRow"></div>
+  </section>
+
+  <footer class="note">Los totales solo cuentan las comidas marcadas. Se guarda en este navegador.</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const BLOCKS = {
+    desayuno: {
+      BA: { label:"Pan con pavo", items:[["Café","al gusto"],["Pan integral","100 g"],["Pechuga de pavo en lonchas","80 g"],["Queso light","20 g"]], kcal:373, p:29, c:43, g:7 },
+      BB: { label:"Pan con jamón", items:[["Café","al gusto"],["Pan","100 g"],["Jamón serrano","50 g"],["Queso light","20 g"]], kcal:388, p:29, c:42, g:9 },
+    },
+    comida: {
+      L1: { label:"Pollo con arroz", items:[["Pechuga de pollo a la plancha","180 g"],["Arroz basmati (crudo)","70 g"],["Verdura salteada/ensalada","150 g"],["Aceite de oliva","10 g"]], kcal:615, p:49, c:67, g:16 },
+      L2: { label:"Ternera con patata", items:[["Ternera magra","160 g"],["Patata (horno/airfryer)","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:647, p:50, c:62, g:21 },
+      L3: { label:"Atún con arroz", items:[["Atún al natural","160 g"],["Arroz basmati (crudo)","70 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:585, p:48, c:67, g:12 },
+      L4: { label:"Pollo con patata", items:[["Pechuga de pollo","180 g"],["Patata","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:570, p:49, c:62, g:13 },
+    },
+    merienda: {
+      S1: { label:"Yogur + chocolate + proteína", items:[["Yogur griego 0%","200 g"],["Copos de maíz zero","20 g"],["Chocolate 99%","10 g"],["Proteína isolate","15 g"]], kcal:307, p:35, c:25, g:6 },
+      S2: { label:"Claras dulces", items:[["Claras de huevo (plancha)","150 g"],["Fruta","100 g"],["Chocolate 99%","5 g"],["Proteína isolate","20 g"]], kcal:231, p:34, c:14, g:3 },
+      S3: { label:"Batido simple", items:[["Proteína isolate","30 g"],["Yogur griego 0%","100 g"],["Fruta","100 g"]], kcal:219, p:35, c:17, g:1 },
+    },
+    cena: {
+      D2: { label:"Salmón con patata", items:[["Salmón","150 g"],["Verdura","200 g"],["Patata","150 g"],["Aceite de oliva","5 g"]], kcal:499, p:37, c:46, g:19 },
+      D5: { label:"Merluza con patata", items:[["Merluza / pescado blanco","200 g"],["Patata (horno/airfryer)","150 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:452, p:40, c:42, g:12 },
+      D6: { label:"Atún salteado asiático", items:[["Atún fresco / en conserva","180 g"],["Arroz basmati (crudo)","30 g"],["Verdura salteada","200 g"],["Salsa de soja","10 g"]], kcal:423, p:52, c:40, g:4 },
+      D3: { label:"Tortilla francesa reforzada", items:[["Huevo entero (2 uds)","120 g"],["Claras de huevo","150 g"],["Pan integral","40 g"],["Jamón serrano","30 g"]], kcal:422, p:45, c:19, g:17 },
+      D9: { label:"Hamburguesa casera", items:[["Ternera + pollo/pavo picado","150 g"],["Pan de hamburguesa","70 g"],["Queso light","20 g"],["Lechuga/tomate","50 g"]], kcal:480, p:41, c:33, g:19 },
+      D10:{ label:"Carne picada salteada", items:[["Ternera + pollo/pavo picado","180 g"],["Verdura salteada","200 g"],["Arroz basmati (crudo)","30 g"],["Salsa de soja","12 g"]], kcal:548, p:42, c:40, g:24 },
+      D8: { label:"Piadina reforzada", items:[["Piadina","100 g"],["Tomate triturado","50 g"],["Pechuga de pavo en lonchas","80 g"],["Mozzarella","30 g"],["Claras de huevo","60 g"]], kcal:489, p:38, c:58, g:11 },
+      D1: { label:"Pollo salteado asiático", items:[["Pechuga de pollo","150 g"],["Verdura salteada","200 g"],["Salsa de soja","15 g"],["Arroz basmati (crudo)","40 g"],["Aceite de oliva","5 g"]], kcal:463, p:42, c:48, g:10 },
+      D4: { label:"Sandwich de pavo", items:[["Pavo en lonchas","100 g"],["Queso light","30 g"],["Pan integral","50 g"],["Verdura/ensalada","100 g"],["Aceite de oliva","5 g"]], kcal:384, p:33, c:31, g:13 },
+    },
+  };
+
+  const MEAL_META = {
+    desayuno: { title:"Desayuno", slot:"AM" },
+    comida:   { title:"Comida",   slot:"MD" },
+    merienda: { title:"Merienda", slot:"PM" },
+    cena:     { title:"Cena",     slot:"PM" },
+  };
+
+  const CALENDAR = {
+    1: { desayuno:"BA", comida:"L1", merienda:"S1", cena:"D2", extra:null },
+    2: { desayuno:"BB", comida:"L2", merienda:"S2", cena:"D5", extra:null },
+    3: { desayuno:"BA", comida:"L3", merienda:"S3", cena:"D6", extra:"+12 g aceite de oliva" },
+    4: { desayuno:"BB", comida:"L4", merienda:"S1", cena:"D3", extra:null },
+    5: { desayuno:"BA", comida:"L1", merienda:"S2", cena:"D9", extra:null },
+    6: { desayuno:"BB", comida:"L2", merienda:"S3", cena:"D10", extra:null },
+    0: { desayuno:"BA", comida:"L3", merienda:"S1", cena:"D8", extra:"+8 g aceite de oliva" },
+  };
+
+  const TARGETS = { kcal:[1700,1830], p:[150,165], c:[145,190], g:[36,55] };
+  const DAY_NAMES = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+  const DAY_SHORT = ["dom","lun","mar","mié","jue","vie","sáb"];
+
+  const STORAGE_KEY = "bitacora-nutricional-v1";
+
+  function loadLog(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function saveLog(log){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(log)); }catch(e){}
+  }
+  let log = loadLog();
+
+  function isoDate(d){
+    const off = d.getTimezoneOffset();
+    const local = new Date(d.getTime() - off*60000);
+    return local.toISOString().slice(0,10);
+  }
+  function parseISO(s){
+    const [y,m,d] = s.split("-").map(Number);
+    return new Date(y, m-1, d);
+  }
+
+  let currentDate = new Date();
+
+  function getDayEntry(dateStr){
+    const dow = parseISO(dateStr).getDay();
+    const defaults = CALENDAR[dow];
+    if(!log[dateStr]){
+      log[dateStr] = {
+        desayuno:{ block:defaults.desayuno, eaten:false },
+        comida:  { block:defaults.comida,   eaten:false },
+        merienda:{ block:defaults.merienda, eaten:false },
+        cena:    { block:defaults.cena,     eaten:false },
+      };
+    }
+    return log[dateStr];
+  }
+
+  const mealsEl = document.getElementById("meals");
+  const dateInput = document.getElementById("dateInput");
+  const dayLabel = document.getElementById("dayLabel");
+
+  function fmt(n){ return Math.round(n*10)/10; }
+
+  function render(){
+    const dateStr = isoDate(currentDate);
+    dateInput.value = dateStr;
+    const dow = currentDate.getDay();
+    dayLabel.textContent = DAY_NAMES[dow];
+
+    const entry = getDayEntry(dateStr);
+    const defaults = CALENDAR[dow];
+
+    mealsEl.innerHTML = "";
+    let totals = { kcal:0, p:0, c:0, g:0 };
+
+    Object.keys(MEAL_META).forEach(mealKey=>{
+      const meta = MEAL_META[mealKey];
+      const options = BLOCKS[mealKey];
+      const sel = entry[mealKey];
+      const block = options[sel.block] || options[Object.keys(options)[0]];
+
+      if(sel.eaten){
+        totals.kcal += block.kcal; totals.p += block.p; totals.c += block.c; totals.g += block.g;
+      }
+
+      const card = document.createElement("div");
+      card.className = "meal-card" + (sel.eaten ? " eaten" : "");
+
+      const top = document.createElement("div");
+      top.className = "meal-top";
+
+      const nameRow = document.createElement("div");
+      nameRow.className = "meal-name-row";
+      nameRow.innerHTML = `<span class="meal-slot">${meta.slot}</span><div class="meal-name-col"><span class="meal-title">${meta.title}</span><span class="meal-sub">${options[sel.block].label}</span></div>`;
+
+      top.appendChild(nameRow);
+
+      const toggle = document.createElement("button");
+      toggle.className = "eat-toggle" + (sel.eaten ? " on" : "");
+      toggle.setAttribute("aria-label", sel.eaten ? "Marcar como no comido" : "Marcar como comido");
+      toggle.textContent = "✓";
+      toggle.addEventListener("click", ()=>{
+        entry[mealKey].eaten = !entry[mealKey].eaten;
+        saveLog(log);
+        render();
+      });
+      top.appendChild(toggle);
+
+      const selectRow = document.createElement("div");
+      selectRow.style.display = "flex";
+      const selectWrap = document.createElement("select");
+      selectWrap.className = "block-select";
+      Object.keys(options).forEach(id=>{
+        const opt = document.createElement("option");
+        opt.value = id;
+        opt.textContent = `${id} · ${options[id].label}`;
+        if(id === sel.block) opt.selected = true;
+        selectWrap.appendChild(opt);
+      });
+      selectWrap.addEventListener("change", ()=>{
+        entry[mealKey].block = selectWrap.value;
+        saveLog(log);
+        render();
+      });
+      selectRow.appendChild(selectWrap);
+
+      const list = document.createElement("ul");
+      list.className = "item-list";
+      block.items.forEach(([name, qty])=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${name}</span><span class="qty">${qty}</span>`;
+        list.appendChild(li);
+      });
+
+      const macros = document.createElement("div");
+      macros.className = "meal-macros";
+      macros.innerHTML = `<span><b>${block.kcal}</b>kcal</span><span><b>${block.p}g</b>proteína</span><span><b>${block.c}g</b>carbos</span><span><b>${block.g}g</b>grasas</span>`;
+
+      card.appendChild(top);
+      card.appendChild(selectRow);
+      card.appendChild(list);
+      card.appendChild(macros);
+
+      if(defaults.extra && (mealKey === "cena")){
+        const note = document.createElement("div");
+        note.className = "extra-note";
+        note.textContent = "Extra del día: " + defaults.extra;
+        card.appendChild(note);
+      }
+
+      mealsEl.appendChild(card);
+    });
+
+    updateSummary(totals);
+    renderHistory(dateStr);
+  }
+
+  function updateSummary(totals){
+    setTile("kcal", totals.kcal, TARGETS.kcal, "");
+    setTile("protein", totals.p, TARGETS.p, "g");
+    setTile("carb", totals.c, TARGETS.c, "g");
+    setTile("fat", totals.g, TARGETS.g, "g");
+  }
+  function setTile(key, value, target, unit){
+    document.getElementById("v-"+key).textContent = fmt(value) + (unit ? " "+unit : "");
+    const pct = Math.max(0, Math.min(100, (value / target[1]) * 100));
+    document.getElementById("b-"+key).style.width = pct + "%";
+  }
+
+  function renderHistory(currentDateStr){
+    const row = document.getElementById("historyRow");
+    row.innerHTML = "";
+    const base = parseISO(currentDateStr);
+    const days = [];
+    for(let i=6;i>=0;i--){
+      const d = new Date(base);
+      d.setDate(base.getDate() - i);
+      days.push(d);
+    }
+    const maxKcal = Math.max(TARGETS.kcal[1], ...days.map(d=>{
+      const ds = isoDate(d);
+      const e = log[ds];
+      if(!e) return 0;
+      return Object.keys(MEAL_META).reduce((sum,mk)=>{
+        if(!e[mk] || !e[mk].eaten) return sum;
+        const b = BLOCKS[mk][e[mk].block];
+        return sum + (b ? b.kcal : 0);
+      },0);
+    }), 100);
+
+    days.forEach(d=>{
+      const ds = isoDate(d);
+      const e = log[ds];
+      let kcal = 0;
+      if(e){
+        kcal = Object.keys(MEAL_META).reduce((sum,mk)=>{
+          if(!e[mk] || !e[mk].eaten) return sum;
+          const b = BLOCKS[mk][e[mk].block];
+          return sum + (b ? b.kcal : 0);
+        },0);
+      }
+      const isToday = ds === currentDateStr;
+      const wrap = document.createElement("div");
+      wrap.className = "hbar-wrap";
+
+      const track = document.createElement("div");
+      track.className = "hbar-track";
+
+      const bandBottom = (TARGETS.kcal[0]/maxKcal)*100;
+      const bandTop = (TARGETS.kcal[1]/maxKcal)*100;
+      const band = document.createElement("div");
+      band.className = "hbar-band";
+      band.style.bottom = bandBottom + "%";
+      band.style.height = (bandTop - bandBottom) + "%";
+      track.appendChild(band);
+
+      const fill = document.createElement("div");
+      fill.className = "hbar-fill" + (isToday ? " today" : "");
+      fill.style.height = Math.max(2, (kcal/maxKcal)*100) + "%";
+      fill.style.position = "absolute";
+      fill.style.bottom = "0"; fill.style.left="0"; fill.style.right="0";
+      track.appendChild(fill);
+
+      const dayName = document.createElement("span");
+      dayName.className = "hbar-day" + (isToday ? " today" : "");
+      dayName.textContent = DAY_SHORT[d.getDay()];
+
+      const kcalLabel = document.createElement("span");
+      kcalLabel.className = "hbar-kcal";
+      kcalLabel.textContent = kcal > 0 ? kcal : "–";
+
+      wrap.appendChild(track);
+      wrap.appendChild(dayName);
+      wrap.appendChild(kcalLabel);
+      row.appendChild(wrap);
+    });
+  }
+
+  document.getElementById("prevDay").addEventListener("click", ()=>{
+    currentDate.setDate(currentDate.getDate()-1);
+    render();
+  });
+  document.getElementById("nextDay").addEventListener("click", ()=>{
+    currentDate.setDate(currentDate.getDate()+1);
+    render();
+  });
+  document.getElementById("todayBtn").addEventListener("click", ()=>{
+    currentDate = new Date();
+    render();
+  });
+  dateInput.addEventListener("change", ()=>{
+    if(dateInput.value){
+      currentDate = parseISO(dateInput.value);
+      render();
+    }
+  });
+
+  render();
+})();
+</script>
