@@ -529,12 +529,12 @@
   };
 
   const CALENDAR = {
-    1: { desayuno:"BA", comida:"L1", merienda:"S1", cena:"D2", extra:null },
+    1: { desayuno:"BA", comida:"L1", merienda:"S1", cena:"D4", extra:null },
     2: { desayuno:"BB", comida:"L2", merienda:"S2", cena:"D5", extra:null },
-    3: { desayuno:"BA", comida:"L3", merienda:"S3", cena:"D6", extra:"+12 g aceite de oliva" },
+    3: { desayuno:"BA", comida:"L3", merienda:"S3", cena:"D12", extra:"+12 g aceite de oliva" },
     4: { desayuno:"BB", comida:"L4", merienda:"S1", cena:"D3", extra:null },
     5: { desayuno:"BA", comida:"L1", merienda:"S2", cena:"D9", extra:null },
-    6: { desayuno:"BB", comida:"L2", merienda:"S3", cena:"D10", extra:null },
+    6: { desayuno:"BB", comida:"L2", merienda:"S3", cena:"D13", extra:null },
     0: { desayuno:"BA", comida:"L3", merienda:"S1", cena:"D8", extra:"+8 g aceite de oliva" },
   };
 
@@ -600,7 +600,11 @@
       const meta = MEAL_META[mealKey];
       const options = BLOCKS[mealKey];
       const sel = entry[mealKey];
-      const block = options[sel.block] || options[Object.keys(options)[0]];
+      if(!options[sel.block]){
+        sel.block = Object.keys(options)[0];
+        saveLog(log);
+      }
+      const block = options[sel.block];
 
       if(sel.eaten){
         totals.kcal += block.kcal; totals.p += block.p; totals.c += block.c; totals.g += block.g;
@@ -614,7 +618,7 @@
 
       const nameRow = document.createElement("div");
       nameRow.className = "meal-name-row";
-      nameRow.innerHTML = `<span class="meal-slot">${meta.slot}</span><div class="meal-name-col"><span class="meal-title">${meta.title}</span><span class="meal-sub">${options[sel.block].label}</span></div>`;
+      nameRow.innerHTML = `<span class="meal-slot">${meta.slot}</span><div class="meal-name-col"><span class="meal-title">${meta.title}</span><span class="meal-sub">${block.label}</span></div>`;
 
       top.appendChild(nameRow);
 
