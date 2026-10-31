@@ -1,11 +1,11 @@
 {
-  "name": "Comidas - Bitácora de Recomposición",
-  "short_name": "Comidas",
-  "description": "Registro diario de las 4 comidas del menú de recomposición corporal",
+  "name": "Bitácora - Comidas & Entreno",
+  "short_name": "Bitácora",
+  "description": "Registro diario de comidas y entrenamiento - Recomposición corporal",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#F7F7FA",
-  "theme_color": "#FC4C02",
+  "background_color": "#121212",
+  "theme_color": "#121212",
   "orientation": "portrait",
   "icons": [
     {
