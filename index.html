@@ -11,7 +11,8 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Bitácora - Comidas & Entreno</title>
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png?v=2">`n  <link rel="icon" type="image/svg+xml" href="icon.svg?v=2">
+  <link rel="apple-touch-icon" href="icon-192.png?v=2">
+  <link rel="icon" type="image/svg+xml" href="icon.svg?v=2">
   <link rel="icon" type="image/png" href="icon-192.png?v=2">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
@@ -1079,6 +1080,13 @@
     },
   };
 
+  const MEAL_META = {
+    desayuno: { title:"Desayuno", slot:"AM" },
+    comida:   { title:"Comida",   slot:"MD" },
+    merienda: { title:"Merienda", slot:"PM" },
+    cena:     { title:"Cena",     slot:"PM" },
+  };
+
   const CALENDAR = {
     1: { type:"gym",  desayuno:"BA", comida:"L1",  merienda:"S1", cena:"D4",  extra:null },
     2: { type:"gym",  desayuno:"BB", comida:"L2",  merienda:"S2", cena:"D5",  extra:null },
@@ -1416,14 +1424,12 @@
   function getDayEntry(dateStr){
     const dow = parseISO(dateStr).getDay();
     const defaults = CALENDAR[dow];
-    if(!log[dateStr]){
-      log[dateStr] = {
-        desayuno:{ block:defaults.desayuno, eaten:false },
-        comida:  { block:defaults.comida,   eaten:false },
-        merienda:{ block:defaults.merienda, eaten:false },
-        cena:    { block:defaults.cena,     eaten:false },
-      };
-    }
+    if(!log[dateStr]) log[dateStr] = {};
+    ['desayuno','comida','merienda','cena'].forEach(mk => {
+      if(!log[dateStr][mk] || !log[dateStr][mk].block){
+        log[dateStr][mk] = { block: defaults[mk] || Object.keys(BLOCKS[mk])[0], eaten: false };
+      }
+    });
     return log[dateStr];
   }
 
@@ -1849,48 +1855,61 @@
     }
   }
 
-  window.stepDate = function(delta){
+    function stepDate(delta){
     currentDate.setDate(currentDate.getDate() + delta);
     render();
-  };
+  }
+  window.stepDate = stepDate;
 
-  window.onDateChanged = function(val){
+  function onDateChanged(val){
     if(!val) return;
     currentDate = parseISO(val);
     render();
-  };
+  }
+  window.onDateChanged = onDateChanged;
 
-  window.switchModule = function(mod){
+  function switchModule(mod){
     currentModule = mod;
-    localStorage.setItem("bitacora_active_module", mod);
+    try { localStorage.setItem("bitacora_active_module", mod); } catch(e){}
 
-    document.getElementById("tabComidas").classList.toggle("active", mod === "comidas");
-    document.getElementById("tabEntreno").classList.toggle("active", mod === "entreno");
+    const tabC = document.getElementById("tabComidas");
+    const tabE = document.getElementById("tabEntreno");
+    const viewC = document.getElementById("viewComidas");
+    const viewE = document.getElementById("viewEntreno");
 
-    document.getElementById("viewComidas").classList.toggle("active", mod === "comidas");
-    document.getElementById("viewEntreno").classList.toggle("active", mod === "entreno");
+    if (tabC) tabC.classList.toggle("active", mod === "comidas");
+    if (tabE) tabE.classList.toggle("active", mod === "entreno");
+    if (viewC) viewC.classList.toggle("active", mod === "comidas");
+    if (viewE) viewE.classList.toggle("active", mod === "entreno");
 
     render();
-  };
+  }
+  window.switchModule = switchModule;
 
-  window.jumpToEntrenoDay = function(targetDow){
+  function jumpToEntrenoDay(targetDow){
     const curDow = currentDate.getDay();
     let diff = targetDow - curDow;
     currentDate.setDate(currentDate.getDate() + diff);
     render();
-  };
+  }
+  window.jumpToEntrenoDay = jumpToEntrenoDay;
 
   /* ====================================================================
      8. COPIA DE SEGURIDAD / BACKUP
      ==================================================================== */
-  window.openBackupModal = function(){
-    document.getElementById("backupModal").classList.add("open");
-  };
-  window.closeBackupModal = function(){
-    document.getElementById("backupModal").classList.remove("open");
-  };
+  function openBackupModal(){
+    const m = document.getElementById("backupModal");
+    if (m) m.classList.add("open");
+  }
+  window.openBackupModal = openBackupModal;
 
-  window.exportDataBackup = function(){
+  function closeBackupModal(){
+    const m = document.getElementById("backupModal");
+    if (m) m.classList.remove("open");
+  }
+  window.closeBackupModal = closeBackupModal;
+
+  function exportDataBackup(){
     const fullBackup = {
       version: 1,
       exportedAt: new Date().toISOString(),
@@ -1904,9 +1923,10 @@
     a.download = `bitacora-backup-${isoDate(new Date())}.json`;
     a.click();
     URL.revokeObjectURL(url);
-  };
+  }
+  window.exportDataBackup = exportDataBackup;
 
-  window.importDataBackup = function(event){
+  function importDataBackup(event){
     const file = event.target.files && event.target.files[0];
     if(!file) return;
     const reader = new FileReader();
@@ -1925,7 +1945,8 @@
       }
     };
     reader.readAsText(file);
-  };
+  }
+  window.importDataBackup = importDataBackup;
 
   // Inicialización
   switchModule(currentModule);
