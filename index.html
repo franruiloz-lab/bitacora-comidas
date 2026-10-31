@@ -939,11 +939,6 @@
       <button class="date-nav-btn" onclick="stepDate(1)" aria-label="Día siguiente">›</button>
     </div>
 
-    <!-- DAY PLAN PILL -->
-    <div class="day-plan-pill" id="dayPlanPill">
-      <span id="dayPlanText">Cargando objetivo del día...</span>
-      <span id="dayPlanBadge">GYM</span>
-    </div>
   </header>
 
   <!-- ========================================================= -->
@@ -951,6 +946,12 @@
   <!-- ========================================================= -->
   <section id="viewComidas" class="view-section active">
     
+    <!-- DAY PLAN PILL (Sólo en comidas) -->
+    <div class="day-plan-pill" id="dayPlanPill">
+      <span id="dayPlanText">Cargando objetivo del día...</span>
+      <span id="dayPlanBadge">GYM</span>
+    </div>
+
     <!-- TILES -->
     <div class="tiles">
       <div class="tile kcal">
@@ -1371,9 +1372,9 @@
     },
     6: { // Sábado
       rest: true,
-      title: "Descanso / Comida Flexible",
-      subtitle: "Recuperación activa y descanso mental",
-      cue: "Día ideal para salir a caminar, recargar pilas y disfrutar de la cena libre presupuestada (pizza o kebab)."
+      title: "Descanso / Recuperación Activa",
+      subtitle: "Regeneración muscular y descanso articular",
+      cue: "Día ideal para dar un paseo ligero, permitir que las articulaciones y el sistema nervioso se recuperen y recargar energía para la semana."
     },
     0: { // Domingo
       rest: true,
