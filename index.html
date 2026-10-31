@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#121212">
+  <meta name="theme-color" content="#0D0E11">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bitácora">
@@ -17,81 +17,30 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
   <style>
     :root {
-      --bg: #F7F7FA;
-      --surface: #FFFFFF;
-      --surface-2: #EFEFF3;
-      --border: #E5E5EA;
-      --text: #14181D;
-      --text-muted: #6E7278;
-      --text-faint: #9C9FA5;
-      --orange: #FC4C02;
-      --orange-soft: #FFE3D6;
-      --lime: #84CC16;
-      --lime-bright: #A3E635;
-      --lime-soft: #F4FCE3;
-      --lime-dark: #3F6212;
-      --c-kcal: #FC4C02;
-      --c-kcal-soft: #FFE3D6;
-      --c-protein: #0C6FD1;
-      --c-protein-soft: #DBEAFB;
-      --c-carb: #E0A100;
-      --c-carb-soft: #FBEDCC;
-      --c-fat: #00A18C;
-      --c-fat-soft: #D6F1EC;
-      --shadow: 0 1px 2px rgba(20,24,29,.05), 0 8px 20px -12px rgba(20,24,29,.14);
-      --radius: 12px;
-      color-scheme: light;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #121212;
-        --surface: #1C1C1E;
-        --surface-2: #242426;
-        --border: #333335;
-        --text: #F4F4F5;
-        --text-muted: #A3A3A7;
-        --text-faint: #707074;
-        --orange: #FF6A2B;
-        --orange-soft: #3A2015;
-        --lime: #CCFF00;
-        --lime-bright: #CCFF00;
-        --lime-soft: #232E14;
-        --lime-dark: #BEF264;
-        --c-kcal: #FF6A2B;
-        --c-kcal-soft: #3A2015;
-        --c-protein: #4C9BEF;
-        --c-protein-soft: #132436;
-        --c-carb: #F0BB33;
-        --c-carb-soft: #332A11;
-        --c-fat: #2FCBB3;
-        --c-fat-soft: #0F2E29;
-        --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -12px rgba(0,0,0,.55);
-        color-scheme: dark;
-      }
-    }
-    :root[data-theme="dark"] {
-      --bg: #121212;
-      --surface: #1C1C1E;
-      --surface-2: #242426;
-      --border: #333335;
-      --text: #F4F4F5;
-      --text-muted: #A3A3A7;
-      --text-faint: #707074;
-      --orange: #FF6A2B;
-      --orange-soft: #3A2015;
+      --bg: #0D0E11;
+      --surface: #16181D;
+      --surface-2: #1E2127;
+      --border: #2B2E36;
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --text-faint: #6B7280;
+      --orange: #FF5A1F;
+      --orange-bright: #FF6A2B;
+      --orange-soft: rgba(255, 90, 31, 0.16);
       --lime: #CCFF00;
       --lime-bright: #CCFF00;
-      --lime-soft: #232E14;
-      --lime-dark: #BEF264;
-      --c-kcal: #FF6A2B;
-      --c-kcal-soft: #3A2015;
-      --c-protein: #4C9BEF;
-      --c-protein-soft: #132436;
-      --c-carb: #F0BB33;
-      --c-carb-soft: #332A11;
-      --c-fat: #2FCBB3;
-      --c-fat-soft: #0F2E29;
-      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -12px rgba(0,0,0,.55);
+      --lime-soft: rgba(204, 255, 0, 0.14);
+      --lime-dark: #CCFF00;
+      --c-kcal: #FF5A1F;
+      --c-kcal-soft: rgba(255, 90, 31, 0.16);
+      --c-protein: #38BDF8;
+      --c-protein-soft: rgba(56, 189, 248, 0.16);
+      --c-carb: #FBBF24;
+      --c-carb-soft: rgba(251, 191, 36, 0.16);
+      --c-fat: #2DD4BF;
+      --c-fat-soft: rgba(45, 212, 191, 0.16);
+      --shadow: 0 2px 8px rgba(0,0,0,.45), 0 12px 28px -10px rgba(0,0,0,.65);
+      --radius: 12px;
       color-scheme: dark;
     }
 
@@ -167,8 +116,8 @@
     }
     .mod-tab.active.entreno {
       background: var(--lime);
-      color: #121212;
-      box-shadow: 0 2px 8px rgba(163,230,53,.35);
+      color: #0D0E11;
+      box-shadow: 0 2px 10px rgba(204,255,0,.35);
     }
     .tool-btn {
       width: 38px;
@@ -258,9 +207,9 @@
       color: var(--text-muted);
     }
     .day-plan-pill.flexi {
-      background: #FEF3C7;
-      color: #92400E;
-      border-color: #FCD34D;
+      background: rgba(251, 191, 36, 0.15);
+      color: #FBBF24;
+      border-color: rgba(251, 191, 36, 0.35);
     }
 
     /* TILES GRID */
@@ -570,7 +519,7 @@
       border-radius: 999px;
       background: var(--text-faint);
     }
-    .day-tab-chip.active .chip-dot { background: #121212; }
+    .day-tab-chip.active .chip-dot { background: #0D0E11; }
 
     /* WORKOUT HEADER CARD */
     .workout-summary-card {
@@ -844,7 +793,7 @@
     .set-check-btn.checked {
       background: var(--lime);
       border-color: var(--lime);
-      color: #121212;
+      color: #0D0E11;
     }
     .btn-add-set {
       padding: 6px;
