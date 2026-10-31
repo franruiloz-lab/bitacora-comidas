@@ -1038,59 +1038,55 @@
   /* ====================================================================
      1. COMIDAS: BLOQUES Y OBJETIVOS DIARIOS ADAPTATIVOS
      ==================================================================== */
-  const BLOCKS = {
+    const BLOCKS = {
     desayuno: {
       BA: { label:"Pan con pavo", items:[["Café","al gusto"],["Pan integral","100 g"],["Pechuga de pavo en lonchas","80 g"],["Queso light","20 g"]], kcal:373, p:29, c:43, g:7 },
       BB: { label:"Pan con jamón", items:[["Café","al gusto"],["Pan","100 g"],["Jamón serrano","50 g"],["Queso light","20 g"]], kcal:388, p:29, c:42, g:9 },
-      BC: { label:"Café con leche largo (ligero)", items:[["Café","al gusto"],["Leche desnatada/semidesnatada","250 ml"]], kcal:110, p:9, c:12, g:3 },
+      BC: { label:"Café con leche largo (ligero día flexible)", items:[["Café","al gusto"],["Leche desnatada/semidesnatada","250 ml"]], kcal:110, p:9, c:12, g:3 },
     },
     comida: {
-      L1: { label:"Pollo con arroz", items:[["Pechuga de pollo a la plancha","180 g"],["Arroz basmati (crudo)","70 g"],["Verdura salteada/ensalada","150 g"],["Aceite de oliva","10 g"]], kcal:615, p:49, c:67, g:16 },
-      L2: { label:"Ternera con patata", items:[["Ternera magra","160 g"],["Patata (horno/airfryer)","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:647, p:50, c:62, g:21 },
-      L3: { label:"Atún con arroz", items:[["Atún al natural","160 g"],["Arroz basmati (crudo)","70 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:585, p:48, c:67, g:12 },
-      L4: { label:"Pollo con patata", items:[["Pechuga de pollo","180 g"],["Patata","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:570, p:49, c:62, g:13 },
-      L5: { label:"Pollo salteado asiático", items:[["Pechuga de pollo","150 g"],["Verdura salteada","200 g"],["Salsa de soja","15 g"],["Arroz basmati (crudo)","40 g"],["Aceite de oliva","5 g"]], kcal:463, p:42, c:48, g:10 },
-      L6: { label:"Salmón con patata", items:[["Salmón","150 g"],["Verdura","200 g"],["Patata","150 g"],["Aceite de oliva","5 g"]], kcal:499, p:37, c:46, g:19 },
-      L7: { label:"Arroz a la cubana con huevo", items:[["Arroz basmati (crudo)","80 g"],["Tomate triturado","50 g"],["Huevo mediano entero","60 g"],["Salchicha de pollo fresca","130 g"],["Claras de huevo","60 g"],["Verdura","100 g"]], kcal:706, p:45, c:76, g:23 },
-      L8: { label:"Atún salteado asiático", items:[["Atún fresco / en conserva","180 g"],["Arroz basmati (crudo)","30 g"],["Verdura salteada","200 g"],["Salsa de soja","10 g"]], kcal:423, p:52, c:40, g:4 },
-      L9: { label:"Carne picada salteada", items:[["Ternera + pollo/pavo picado","180 g"],["Verdura salteada","200 g"],["Arroz basmati (crudo)","30 g"],["Salsa de soja","12 g"]], kcal:548, p:42, c:40, g:24 },
-      L10:{ label:"Sándwich de pavo y ensalada (ligero día flexible)", items:[["Pan integral","60 g"],["Pechuga de pavo lonchas","100 g"],["Queso light","20 g"],["Tomate y lechuga abundante","200 g"],["Aceite de oliva","4 g"]], kcal:345, p:33, c:34, g:7 },
+      L1:  { label:"Pollo con arroz (gym · 70g arroz)", items:[["Pechuga de pollo a la plancha","180 g"],["Arroz basmati (crudo)","70 g"],["Verdura salteada/ensalada","150 g"],["Aceite de oliva","10 g"]], kcal:615, p:49, c:67, g:16 },
+      L1b: { label:"Pollo con arroz (descanso · 45g arroz)", items:[["Pechuga de pollo a la plancha","190 g"],["Arroz basmati (crudo)","45 g"],["Verdura salteada/ensalada","200 g"],["Aceite de oliva","6 g"]], kcal:495, p:52, c:43, g:11 },
+      L2:  { label:"Ternera con patata (gym · 250g patata)", items:[["Ternera magra","160 g"],["Patata (horno/airfryer)","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:647, p:50, c:62, g:21 },
+      L2b: { label:"Ternera con patata (descanso · 170g patata)", items:[["Ternera magra","170 g"],["Patata (horno/airfryer)","170 g"],["Verdura","200 g"],["Aceite de oliva","6 g"]], kcal:530, p:53, c:42, g:17 },
+      L3:  { label:"Atún con arroz (gym · 70g arroz)", items:[["Atún al natural","160 g"],["Arroz basmati (crudo)","70 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:585, p:48, c:67, g:12 },
+      L3b: { label:"Atún con arroz (descanso · 45g arroz)", items:[["Atún al natural","180 g"],["Arroz basmati (crudo)","45 g"],["Verdura salteada/ensalada","200 g"],["Aceite de oliva","6 g"]], kcal:485, p:52, c:43, g:9 },
+      L4:  { label:"Pollo con patata (gym · 250g patata)", items:[["Pechuga de pollo","180 g"],["Patata","250 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:570, p:49, c:62, g:13 },
+      L4b: { label:"Pollo con patata (descanso · 170g patata)", items:[["Pechuga de pollo","190 g"],["Patata","170 g"],["Verdura","200 g"],["Aceite de oliva","6 g"]], kcal:480, p:52, c:42, g:10 },
+      L5:  { label:"Pollo salteado asiático", items:[["Pechuga de pollo","150 g"],["Verdura salteada","200 g"],["Salsa de soja","15 g"],["Arroz basmati (crudo)","40 g"],["Aceite de oliva","5 g"]], kcal:463, p:42, c:48, g:10 },
+      L6:  { label:"Salmón con patata", items:[["Salmón","150 g"],["Verdura","200 g"],["Patata","150 g"],["Aceite de oliva","5 g"]], kcal:499, p:37, c:46, g:19 },
+      L7:  { label:"Arroz a la cubana con huevo", items:[["Arroz basmati (crudo)","80 g"],["Tomate triturado","50 g"],["Huevo mediano entero","60 g"],["Salchicha de pollo fresca","130 g"],["Claras de huevo","60 g"],["Verdura","100 g"]], kcal:706, p:45, c:76, g:23 },
+      L8:  { label:"Atún salteado asiático", items:[["Atún fresco / en conserva","180 g"],["Arroz basmati (crudo)","30 g"],["Verdura salteada","200 g"],["Salsa de soja","10 g"]], kcal:423, p:52, c:40, g:4 },
+      L9:  { label:"Carne picada salteada", items:[["Ternera + pollo/pavo picado","180 g"],["Verdura salteada","200 g"],["Arroz basmati (crudo)","30 g"],["Salsa de soja","12 g"]], kcal:548, p:42, c:40, g:24 },
+      L10: { label:"Sándwich pavo y ensalada (ligero día flexible)", items:[["Pan integral","60 g"],["Pechuga de pavo lonchas","100 g"],["Queso light","20 g"],["Tomate y lechuga abundante","200 g"],["Aceite de oliva","4 g"]], kcal:345, p:33, c:34, g:7 },
     },
     merienda: {
       S1: { label:"Yogur + chocolate + proteína", items:[["Yogur griego 0%","200 g"],["Copos de maíz zero","20 g"],["Chocolate 99%","10 g"],["Proteína isolate","15 g"]], kcal:307, p:35, c:25, g:6 },
       S2: { label:"Claras dulces", items:[["Claras de huevo (plancha)","150 g"],["Fruta","100 g"],["Chocolate 99%","5 g"],["Proteína isolate","20 g"]], kcal:231, p:34, c:14, g:3 },
       S3: { label:"Batido simple", items:[["Proteína isolate","30 g"],["Yogur griego 0%","100 g"],["Fruta","100 g"]], kcal:219, p:35, c:17, g:1 },
-      S4: { label:"Batido de proteína ligero", items:[["Proteína isolate","30 g"],["Agua / hielo","250 ml"]], kcal:115, p:27, c:1, g:0 },
+      S4: { label:"Batido de proteína ligero (día flexible)", items:[["Proteína isolate","30 g"],["Agua / hielo","250 ml"]], kcal:115, p:27, c:1, g:0 },
     },
     cena: {
-      D5: { label:"Merluza con patata", items:[["Merluza / pescado blanco","200 g"],["Patata (horno/airfryer)","150 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:452, p:40, c:42, g:12 },
-      D3: { label:"Tortilla francesa reforzada", items:[["Huevo entero (2 uds)","120 g"],["Claras de huevo","150 g"],["Pan integral","40 g"],["Jamón serrano","30 g"]], kcal:422, p:45, c:19, g:17 },
-      D9: { label:"Hamburguesa casera", items:[["Ternera + pollo/pavo picado","150 g"],["Pan de hamburguesa","70 g"],["Queso light","20 g"],["Lechuga/tomate","50 g"]], kcal:480, p:41, c:33, g:19 },
-      D8: { label:"Piadina reforzada", items:[["Piadina","100 g"],["Tomate triturado","50 g"],["Pechuga de pavo en lonchas","80 g"],["Mozzarella","30 g"],["Claras de huevo","60 g"]], kcal:489, p:38, c:58, g:11 },
-      D4: { label:"Sandwich de pavo", items:[["Pavo en lonchas","100 g"],["Queso light","30 g"],["Pan integral","50 g"],["Verdura/ensalada","100 g"],["Aceite de oliva","5 g"]], kcal:384, p:33, c:31, g:13 },
-      D11:{ label:"Pollo con ñoquis (ligera)", items:[["Pechuga de pollo","150 g"],["Ñoquis de patata","120 g"],["Verdura","150 g"],["Aceite de oliva","6 g"]], kcal:503, p:41, c:54, g:12 },
-      D12:{ label:"Revuelto de huevo con jamón", items:[["Huevos enteros","120 g"],["Jamón serrano","50 g"],["Claras de huevo","80 g"],["Verdura salteada","180 g"],["Aceite de oliva","5 g"]], kcal:460, p:44, c:17, g:24 },
-      D13:{ label:"Pizza casera pollo y verduras", items:[["Base de pizza Hacendado","140 g"],["Tomate triturado","40 g"],["Cebolla","30 g"],["Pimiento","40 g"],["Pechuga de pollo a la plancha","130 g"],["Queso light","30 g"],["Aceite de oliva","5 g"]], kcal:637, p:50, c:74, g:14 },
-      D14:{ label:"Tarrina Kebab (Día Flexible)", items:[["Carne de kebab + patatas","ración estimada"],["Salsa kebab sin queso","moderada"]], kcal:1080, p:52, c:70, g:48 },
+      D4:  { label:"Sándwich de pavo reforzado", items:[["Pan integral","50 g"],["Pavo en lonchas","120 g"],["Queso light","30 g"],["Verdura/ensalada","150 g"],["Aceite de oliva","5 g"]], kcal:405, p:38, c:31, g:13 },
+      D5:  { label:"Merluza con patata", items:[["Merluza / pescado blanco","200 g"],["Patata (horno/airfryer)","150 g"],["Verdura","150 g"],["Aceite de oliva","8 g"]], kcal:452, p:40, c:42, g:12 },
+      D3:  { label:"Tortilla francesa reforzada", items:[["Huevo entero (2 uds)","120 g"],["Claras de huevo","150 g"],["Pan integral","40 g"],["Jamón serrano","30 g"]], kcal:422, p:45, c:19, g:17 },
+      D12: { label:"Revuelto de huevo con jamón", items:[["Huevos enteros","120 g"],["Jamón serrano","50 g"],["Claras de huevo","80 g"],["Verdura salteada","180 g"],["Aceite de oliva","5 g"]], kcal:460, p:44, c:17, g:24 },
+      D9:  { label:"Hamburguesa casera", items:[["Ternera + pollo/pavo picado","150 g"],["Pan de hamburguesa","70 g"],["Queso light","20 g"],["Lechuga/tomate","50 g"]], kcal:480, p:41, c:33, g:19 },
+      D8:  { label:"Piadina reforzada", items:[["Piadina","100 g"],["Tomate triturado","50 g"],["Pechuga de pavo en lonchas","80 g"],["Mozzarella","30 g"],["Claras de huevo","60 g"]], kcal:489, p:38, c:58, g:11 },
+      D11: { label:"Pollo con ñoquis (ligera)", items:[["Pechuga de pollo","150 g"],["Ñoquis de patata","120 g"],["Verdura","150 g"],["Aceite de oliva","6 g"]], kcal:503, p:41, c:54, g:12 },
+      D13: { label:"Pizza casera pollo y verduras", items:[["Base de pizza Hacendado","140 g"],["Tomate triturado","40 g"],["Cebolla","30 g"],["Pimiento","40 g"],["Pechuga de pollo a la plancha","130 g"],["Queso light","30 g"],["Aceite de oliva","5 g"]], kcal:637, p:50, c:74, g:14 },
+      D14: { label:"Tarrina Kebab / Pizza grande (Día Flexible)", items:[["Carne de kebab + patatas / pizza","ración grande"],["Salsa kebab sin queso","moderada"]], kcal:1080, p:52, c:70, g:48 },
     },
   };
 
-  const MEAL_META = {
-    desayuno: { title:"Desayuno", slot:"AM" },
-    comida:   { title:"Comida",   slot:"MD" },
-    merienda: { title:"Merienda", slot:"PM" },
-    cena:     { title:"Cena",     slot:"PM" },
-  };
-
-  // CALENDARIO BASE
   const CALENDAR = {
-    1: { type:"gym",  desayuno:"BA", comida:"L1", merienda:"S1", cena:"D4",  extra:null },
-    2: { type:"gym",  desayuno:"BB", comida:"L2", merienda:"S2", cena:"D5",  extra:null },
-    3: { type:"rest", desayuno:"BA", comida:"L3", merienda:"S3", cena:"D12", extra:null },
-    4: { type:"gym",  desayuno:"BB", comida:"L4", merienda:"S1", cena:"D3",  extra:null },
-    5: { type:"gym",  desayuno:"BA", comida:"L1", merienda:"S2", cena:"D9",  extra:null },
-    6: { type:"flexi",desayuno:"BC", comida:"L10",merienda:"S4", cena:"D14", extra:null },
-    0: { type:"rest", desayuno:"BA", comida:"L3", merienda:"S1", cena:"D8",  extra:null },
+    1: { type:"gym",  desayuno:"BA", comida:"L1",  merienda:"S1", cena:"D4",  extra:null },
+    2: { type:"gym",  desayuno:"BB", comida:"L2",  merienda:"S2", cena:"D5",  extra:null },
+    3: { type:"rest", desayuno:"BA", comida:"L3b", merienda:"S3", cena:"D12", extra:null },
+    4: { type:"gym",  desayuno:"BB", comida:"L4",  merienda:"S1", cena:"D3",  extra:null },
+    5: { type:"gym",  desayuno:"BA", comida:"L1",  merienda:"S2", cena:"D9",  extra:null },
+    6: { type:"flexi",desayuno:"BC", comida:"L10", merienda:"S4", cena:"D14", extra:null },
+    0: { type:"rest", desayuno:"BA", comida:"L1b", merienda:"S1", cena:"D4",  extra:null },
   };
 
   // OBJETIVOS ADAPTATIVOS SEGÚN TIPO DE DÍA
