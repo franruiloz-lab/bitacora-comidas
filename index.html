@@ -997,11 +997,11 @@
     
     <!-- QUICK DAY TABS (Lunes a Viernes) -->
     <div class="entreno-tabs-row" id="entrenoTabsRow">
-      <button class="day-tab-chip" onclick="jumpToEntrenoDay(1)"><span class="chip-dot"></span>LUN · Torso A</button>
-      <button class="day-tab-chip" onclick="jumpToEntrenoDay(2)"><span class="chip-dot"></span>MAR · Pierna</button>
+      <button class="day-tab-chip" onclick="jumpToEntrenoDay(1)"><span class="chip-dot"></span>LUN · Espalda</button>
+      <button class="day-tab-chip" onclick="jumpToEntrenoDay(2)"><span class="chip-dot"></span>MAR · Pecho</button>
       <button class="day-tab-chip" onclick="jumpToEntrenoDay(3)"><span class="chip-dot"></span>MIÉ · Descanso</button>
-      <button class="day-tab-chip" onclick="jumpToEntrenoDay(4)"><span class="chip-dot"></span>JUE · Torso B</button>
-      <button class="day-tab-chip" onclick="jumpToEntrenoDay(5)"><span class="chip-dot"></span>VIE · Estética</button>
+      <button class="day-tab-chip" onclick="jumpToEntrenoDay(4)"><span class="chip-dot"></span>JUE · Pierna</button>
+      <button class="day-tab-chip" onclick="jumpToEntrenoDay(5)"><span class="chip-dot"></span>VIE · Brazos y Hombro</button>
       <button class="day-tab-chip" onclick="jumpToEntrenoDay(6)"><span class="chip-dot"></span>SÁB · Libre</button>
       <button class="day-tab-chip" onclick="jumpToEntrenoDay(0)"><span class="chip-dot"></span>DOM · Relax</button>
     </div>
@@ -1109,14 +1109,14 @@
   const DAY_SHORT = ["dom","lun","mar","mié","jue","vie","sáb"];
 
   /* ====================================================================
-     2. ENTRENAMIENTO: RUTINA CIENTÍFICA & ESTÉTICA (4 DÍAS)
+     2. ENTRENAMIENTO: RUTINA POR GRUPO MUSCULAR (4 DÍAS)
      ==================================================================== */
   const WORKOUT_DAYS = {
     1: { // Lunes
-      title: "Torso A",
-      subtitle: "Densidad de espalda & empuje + Braquial",
-      focus: ["Espalda Amplitud", "Pecho Medio", "Remo Apoyado", "Pec Deck", "Braquial Anterior", "Abdomen"],
-      badge: "LUNES · TORSO A",
+      title: "Espalda",
+      subtitle: "Amplitud, grosor y deltoides posterior",
+      focus: ["Dorsal", "Espalda Media", "Deltoides Posterior", "Abdomen"],
+      badge: "LUNES · ESPALDA",
       exercises: [
         {
           id: "lat-pulldown",
@@ -1129,6 +1129,54 @@
           media: "Wide-Grip_Lat_Pulldown"
         },
         {
+          id: "iso-row",
+          name: "Remo en máquina con apoyo en pecho",
+          target: "Espalda media, romboides y trapecio",
+          equipment: "Máquina de remo apoyado",
+          cue: "Pecho pegado al cojín. Tira con los codos pegados o a 45º y aprieta 1 segundo atrás antes de estirar.",
+          sets: 4,
+          repRange: "10-12 reps",
+          media: "Leverage_Iso_Row"
+        },
+        {
+          id: "seated-cable-row",
+          name: "Remo en polea baja agarre neutro",
+          target: "Dorsal ancho y espalda baja/media",
+          equipment: "Polea baja con tirador cerrado",
+          cue: "Torso erguido sin balancear la espalda baja. Lleva el agarre hacia el ombligo tirando con los codos.",
+          sets: 3,
+          repRange: "10-12 reps",
+          media: "Seated_Cable_Rows"
+        },
+        {
+          id: "reverse-pec-deck",
+          name: "Pájaros en máquina (Reverse Pec Deck)",
+          target: "Deltoides posterior y trapecio medio",
+          equipment: "Máquina contractora invertida",
+          cue: "Pecho contra el cojín, brazos casi rectos. Empuja hacia afuera y atrás liderando con los codos.",
+          sets: 3,
+          repRange: "12-15 reps",
+          media: "Reverse_Machine_Flyes"
+        },
+        {
+          id: "ab-crunch-1",
+          name: "Crunch en máquina de abdominales",
+          target: "Recto abdominal",
+          equipment: "Máquina de abdominales",
+          cue: "No tires con los brazos ni con el cuello; enrolla la columna apretando el ombligo hacia dentro.",
+          sets: 3,
+          repRange: "12-15 reps",
+          media: "Ab_Crunch_Machine"
+        }
+      ]
+    },
+    2: { // Martes
+      title: "Pecho",
+      subtitle: "Pecho medio, superior y hombro lateral",
+      focus: ["Pecho Medio", "Pecho Superior", "Aislamiento Pectoral", "Deltoides Lateral"],
+      badge: "MARTES · PECHO",
+      exercises: [
+        {
           id: "chest-press",
           name: "Press de pecho en máquina",
           target: "Pectoral medio e inferior",
@@ -1139,14 +1187,14 @@
           media: "Leverage_Chest_Press"
         },
         {
-          id: "iso-row",
-          name: "Remo en máquina con apoyo en pecho",
-          target: "Espalda media, romboides y trapecio",
-          equipment: "Máquina de remo apoyado",
-          cue: "Pecho pegado al cojín. Tira con los codos pegados o a 45º y aprieta 1 segundo atrás antes de estirar.",
-          sets: 3,
-          repRange: "10-12 reps",
-          media: "Leverage_Iso_Row"
+          id: "incline-chest-press",
+          name: "Press inclinado en máquina",
+          target: "Haz clavicular (pecho superior)",
+          equipment: "Máquina inclinada o Multipower",
+          cue: "Inclinación a unos 30º-45º. Empuja en diagonal sintiendo la parte alta del pecho.",
+          sets: 4,
+          repRange: "8-12 reps",
+          media: "Leverage_Incline_Chest_Press"
         },
         {
           id: "pec-deck",
@@ -1159,32 +1207,28 @@
           media: "Butterfly"
         },
         {
-          id: "cable-hammer-curl",
-          name: "Curl martillo en polea con cuerda",
-          target: "Braquial anterior (anchura frontal del brazo)",
-          equipment: "Polea baja con cuerda",
-          cue: "Palmas enfrentadas (agarre neutro). Mantén los codos pegados a los costados y abre la cuerda un poco arriba.",
+          id: "cable-lateral-raise",
+          name: "Elevaciones laterales en polea",
+          target: "Deltoides lateral (anchura y efecto 3D)",
+          equipment: "Polea baja / media a la altura de la cadera",
+          cue: "Eleva el brazo en el plano escapular (ligeramente hacia delante) sin balancear el torso.",
           sets: 4,
-          repRange: "10-12 reps",
-          media: "Cable_Hammer_Curls_-_Rope_Attachment"
-        },
-        {
-          id: "ab-crunch-1",
-          name: "Crunch en máquina de abdominales",
-          target: "Recto abdominal con sobrecarga progresiva",
-          equipment: "Máquina de abdominales",
-          cue: "No tires con los brazos ni con el cuello; enrolla la columna vertebral apretando el ombligo hacia dentro.",
-          sets: 3,
           repRange: "12-15 reps",
-          media: "Ab_Crunch_Machine"
+          media: "Side_Lateral_Raise"
         }
       ]
     },
-    2: { // Martes
-      title: "Pierna Completa & Core",
-      subtitle: "Cadena anterior y posterior con máxima estabilidad",
+    3: { // Miércoles
+      rest: true,
+      title: "Descanso / Clases",
+      subtitle: "Día de estudio y recuperación muscular",
+      cue: "Aprovecha para descansar el sistema nervioso central, mantener buena hidratación y cumplir la dieta ligera de día sin gym."
+    },
+    4: { // Jueves
+      title: "Pierna",
+      subtitle: "Cuádriceps, isquios, gemelos y core",
       focus: ["Cuádriceps", "Isquiosurales", "Gemelos", "Abdomen"],
-      badge: "MARTES · PIERNA",
+      badge: "JUEVES · PIERNA",
       exercises: [
         {
           id: "leg-press",
@@ -1229,7 +1273,7 @@
         {
           id: "ab-crunch-2",
           name: "Crunch en máquina de abdominales",
-          target: "Core y recto abdominal",
+          target: "Recto abdominal",
           equipment: "Máquina de abdominales",
           cue: "Enfócate en expulsar todo el aire al bajar contrayendo fuerte el abdomen.",
           sets: 3,
@@ -1238,75 +1282,11 @@
         }
       ]
     },
-    3: { // Miércoles
-      rest: true,
-      title: "Descanso / Clases",
-      subtitle: "Día de estudio y recuperación muscular",
-      cue: "Aprovecha para descansar el sistema nervioso central, mantener buena hidratación y cumplir la dieta ligera de día sin gym."
-    },
-    4: { // Jueves
-      title: "Torso B",
-      subtitle: "Enfoque Pecho Superior & Hombro 3D + Tríceps",
-      focus: ["Pecho Superior", "Dorsal", "Deltoides Lateral", "Deltoides Posterior", "Tríceps Lateral"],
-      badge: "JUEVES · TORSO B",
-      exercises: [
-        {
-          id: "incline-chest-press",
-          name: "Press inclinado en máquina",
-          target: "Haz clavicular (pecho superior)",
-          equipment: "Máquina inclinada o Multipower",
-          cue: "Inclinación a unos 30º-45º. Empuja en diagonal sintiendo la parte alta del pecho.",
-          sets: 4,
-          repRange: "8-12 reps",
-          media: "Leverage_Incline_Chest_Press"
-        },
-        {
-          id: "seated-cable-row",
-          name: "Remo en polea baja agarre neutro",
-          target: "Dorsal ancho y espalda baja/media",
-          equipment: "Polea baja con tirador cerrado",
-          cue: "Torso erguido sin balancear la espalda baja. Lleva el agarre hacia el ombligo tirando con los codos.",
-          sets: 4,
-          repRange: "10-12 reps",
-          media: "Seated_Cable_Rows"
-        },
-        {
-          id: "cable-lateral-raise",
-          name: "Elevaciones laterales en polea",
-          target: "Deltoides lateral (anchura y efecto 3D)",
-          equipment: "Polea baja / media a la altura de la cadera",
-          cue: "Polea detrás del cuerpo o por delante. Eleva el brazo en el plano escapular (ligeramente hacia delante).",
-          sets: 4,
-          repRange: "12-15 reps",
-          media: "Side_Lateral_Raise"
-        },
-        {
-          id: "reverse-pec-deck",
-          name: "Pájaros en máquina (Reverse Pec Deck)",
-          target: "Deltoides posterior y trapecio medio",
-          equipment: "Máquina contractora invertida",
-          cue: "Pecho contra el cojín, brazos casi rectos. Empuja hacia afuera y atrás liderando con los codos.",
-          sets: 3,
-          repRange: "12-15 reps",
-          media: "Reverse_Machine_Flyes"
-        },
-        {
-          id: "triceps-pushdown-rope",
-          name: "Extensiones de tríceps en polea con cuerda",
-          target: "Cabeza lateral del tríceps (anchura frontal)",
-          equipment: "Polea alta con cuerda",
-          cue: "Codos clavados al costado. Separa los extremos de la cuerda al final de la extensión y aprieta el tríceps.",
-          sets: 4,
-          repRange: "10-12 reps",
-          media: "Triceps_Pushdown_-_Rope_Attachment"
-        }
-      ]
-    },
     5: { // Viernes
-      title: "Especialización Estética",
-      subtitle: "Brazos 3D completos, Hombro y Retoque Core",
-      focus: ["Bíceps", "Tríceps Cabeza Larga", "Braquial Anterior", "Tríceps Lateral", "Deltoides Lateral", "Abdomen"],
-      badge: "VIERNES · BRAZOS & ESTÉTICA",
+      title: "Brazos y Hombro",
+      subtitle: "Bíceps, tríceps, hombro lateral y core",
+      focus: ["Bíceps", "Braquial Anterior", "Tríceps", "Deltoides Lateral", "Abdomen"],
+      badge: "VIERNES · BRAZOS Y HOMBRO",
       exercises: [
         {
           id: "incline-dumbbell-curl",
@@ -1319,14 +1299,14 @@
           media: "Incline_Dumbbell_Curl"
         },
         {
-          id: "overhead-triceps-ext",
-          name: "Press francés / Extensión sobre cabeza en polea",
-          target: "Cabeza larga del tríceps (grosor del brazo)",
-          equipment: "Polea baja/media con cuerda hacia delante",
-          cue: "Codos apuntando hacia delante. Estira los brazos hacia el frente bloqueando el tríceps con seguridad articular.",
-          sets: 4,
+          id: "cable-hammer-curl",
+          name: "Curl martillo en polea con cuerda",
+          target: "Braquial anterior (anchura frontal del brazo)",
+          equipment: "Polea baja con cuerda",
+          cue: "Palmas enfrentadas (agarre neutro). Mantén los codos pegados a los costados y abre la cuerda un poco arriba.",
+          sets: 3,
           repRange: "10-12 reps",
-          media: "Cable_Rope_Overhead_Triceps_Extension"
+          media: "Cable_Hammer_Curls_-_Rope_Attachment"
         },
         {
           id: "cross-body-hammer-curl",
@@ -1339,19 +1319,29 @@
           media: "Cross_Body_Hammer_Curl"
         },
         {
-          id: "single-arm-tricep",
-          name: "Extensión unilateral de tríceps en polea",
-          target: "Cabeza lateral y aislamiento simétrico",
-          equipment: "Polea alta con tirador individual",
-          cue: "Aísla cada brazo por separado para corregir descompensaciones. Movimiento suave sin inercias.",
-          sets: 3,
-          repRange: "12-15 reps",
+          id: "triceps-pushdown-rope",
+          name: "Extensiones de tríceps en polea con cuerda",
+          target: "Cabeza lateral del tríceps (anchura frontal)",
+          equipment: "Polea alta con cuerda",
+          cue: "Codos clavados al costado. Separa los extremos de la cuerda al final de la extensión y aprieta el tríceps.",
+          sets: 4,
+          repRange: "10-12 reps",
           media: "Triceps_Pushdown_-_Rope_Attachment"
+        },
+        {
+          id: "overhead-triceps-ext",
+          name: "Press francés / Extensión sobre cabeza en polea",
+          target: "Cabeza larga del tríceps (grosor del brazo)",
+          equipment: "Polea baja/media con cuerda hacia delante",
+          cue: "Codos apuntando hacia delante. Estira los brazos hacia el frente bloqueando el tríceps con seguridad articular.",
+          sets: 4,
+          repRange: "10-12 reps",
+          media: "Cable_Rope_Overhead_Triceps_Extension"
         },
         {
           id: "lateral-raise-friday",
           name: "Elevaciones laterales en polea / máquina",
-          target: "Remate del deltoides lateral (efecto 3D)",
+          target: "Deltoides lateral (anchura y efecto 3D)",
           equipment: "Polea a la cadera o máquina de elevaciones",
           cue: "Concéntrate en la quemazón controlada sin balancear la espalda.",
           sets: 4,
@@ -1363,7 +1353,7 @@
           name: "Crunch en máquina de abdominales",
           target: "Recto abdominal",
           equipment: "Máquina de abdominales",
-          cue: "Última sesión de core de la semana. Busca subir 1 placa o 1 repetición respecto al martes.",
+          cue: "Última sesión de core de la semana. Busca subir 1 placa o 1 repetición respecto al jueves.",
           sets: 3,
           repRange: "12-15 reps",
           media: "Ab_Crunch_Machine"
@@ -1380,7 +1370,7 @@
       rest: true,
       title: "Preparación Semanal",
       subtitle: "Descanso y planificación",
-      cue: "Descanso completo. Asegura 7-8h de sueño para empezar el lunes con máxima energía en el Torso A."
+      cue: "Descanso completo. Asegura 7-8h de sueño para empezar el lunes con máxima energía en el día de Espalda."
     }
   };
 
